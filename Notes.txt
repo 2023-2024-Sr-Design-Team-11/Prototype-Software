@@ -1,0 +1,12 @@
+System Decomposition:
+ - Infusion Pump State Machine
+
+ - HTTP Server
+
+ - Logging System
+	
+ - Actuator Driver Logic -> Actuator Driver .h has all the functions. Main logic 
+
+ - Audio Subsystem
+
+Business logic:
