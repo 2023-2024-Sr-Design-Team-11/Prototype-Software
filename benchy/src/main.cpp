@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <Arduino_FreeRTOS.h>
 
 // put function declarations here:
 

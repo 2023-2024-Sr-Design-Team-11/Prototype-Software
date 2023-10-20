@@ -1,7 +1,7 @@
 System Decomposition:
  - Infusion Pump State Machine
 
- - HTTP Server
+ - HTTP Server (after getting ESP32)
 
  - Logging System
 	
