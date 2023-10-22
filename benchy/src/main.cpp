@@ -44,7 +44,7 @@ void BlinkTaskPractice(void *blinkParameters) {
     state = state == 1 ? 0 : 1;
     
     // Delay => According to Arduino_FreeRTOS docs, delay calls vTaskDelay automatically.
-    delay(1000);
+    delay(500);
   }
 
   // in the event the for loop exits:
@@ -57,3 +57,5 @@ void SerialPrintTaskPractice(void *printParams) {
     
   }
 }
+//hi jake
+//by jake
