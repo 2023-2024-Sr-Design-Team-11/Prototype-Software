@@ -52,3 +52,8 @@ void BlinkTaskPractice(void *blinkParameters) {
 
 }
 
+void SerialPrintTaskPractice(void *printParams) {
+  for(;;) {
+    
+  }
+}
