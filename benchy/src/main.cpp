@@ -57,5 +57,3 @@ void SerialPrintTaskPractice(void *printParams) {
     
   }
 }
-//hi jake
-//by jake
