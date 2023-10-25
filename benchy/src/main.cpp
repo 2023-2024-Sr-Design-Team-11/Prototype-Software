@@ -23,11 +23,17 @@ void setup() {
   // put your setup code here, to run once:
   
   
-  BaseType_t stepperSuccess = xTaskCreate(StepperMotorPractice,"step", 512, nullptr, 2, nullptr);
-  BaseType_t blinkSuccess = xTaskCreate(BlinkTaskPractice,"Blink", 512, nullptr, 1, blinkHandle);
+  BaseType_t stepperSuccess = xTaskCreate(StepperMotorPractice,"step", 256, nullptr, 1, nullptr);
+  BaseType_t blinkSuccess = xTaskCreate(BlinkTaskPractice,"Blink", 256, nullptr, 2, blinkHandle);
 
   if(stepperSuccess == pdPASS) {
-    String out = String("Hello, Blink: ");
+    String out = String("Stepper Task Created");
+    Serial.println(out);
+  } else {
+    Serial.println("Failed to create Stepper task.");
+  }
+  if(blinkSuccess == pdPASS) {
+    String out = String("Blink Task Created");
     Serial.println(out);
   } else {
     Serial.println("Failed to create Blink task.");
@@ -46,6 +52,7 @@ void BlinkTaskPractice(void *blinkParameters) {
 
   //infinite loop
   for(;;) {
+    Serial.println("Running Blink Task");
     digitalWrite(ACTIVITY_LED, state);
 
     state = state == 1 ? 0 : 1;
@@ -61,11 +68,12 @@ void BlinkTaskPractice(void *blinkParameters) {
 
 void StepperMotorPractice(void *stepperParams) {
   //Setup
+  BaseType_t state = 0;
   pinMode(STEPPER_IN1, OUTPUT);
   pinMode(STEPPER_IN2, OUTPUT);
   pinMode(STEPPER_IN3, OUTPUT);
   pinMode(STEPPER_IN4, OUTPUT);
-  BaseType_t state = 0;
+  delay(30);
 
   while(true){
     if(state>7){
@@ -125,7 +133,7 @@ void StepperMotorPractice(void *stepperParams) {
     }
     state++;
     Serial.println(state);
-    delay(10);
+    delayMicroseconds(10);
   }
 
 
