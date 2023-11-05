@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <Arduino_FreeRTOS.h>
-
+#include <StepperDriver.h>
 #define ACTIVITY_LED 13
 #define STEPPER_IN1 11
 #define STEPPER_IN2 10
@@ -22,16 +22,19 @@ void setup() {
   Serial.begin(9600);
   // put your setup code here, to run once:
   
-  
-  BaseType_t stepperSuccess = xTaskCreate(StepperMotorPractice,"step", 256, nullptr, 1, nullptr);
+  StepperMotor motor1(STEPPER_IN1,STEPPER_IN2,STEPPER_IN3,STEPPER_IN4,10,CLOCKWISE);
+  motor1.StartStepper();
+  Serial.println(motor1.playornot);
+
+  //BaseType_t stepperSuccess = xTaskCreate(StepperMotorPractice,"step", 256, &motor1, 1, nullptr);
   BaseType_t blinkSuccess = xTaskCreate(BlinkTaskPractice,"Blink", 256, nullptr, 2, blinkHandle);
 
-  if(stepperSuccess == pdPASS) {
+  /*if(stepperSuccess == pdPASS) {
     String out = String("Stepper Task Created");
     Serial.println(out);
   } else {
     Serial.println("Failed to create Stepper task.");
-  }
+  }*/
   if(blinkSuccess == pdPASS) {
     String out = String("Blink Task Created");
     Serial.println(out);
@@ -66,9 +69,11 @@ void BlinkTaskPractice(void *blinkParameters) {
 
 }
 
-void StepperMotorPractice(void *stepperParams) {
+void StepperMotorPractice(void * motor) {
+  StepperMotor motor1 = *(StepperMotor *) motor;
+  StartMotor(motor1);
   //Setup
-  BaseType_t state = 0;
+  /*BaseType_t state = 0;
   pinMode(STEPPER_IN1, OUTPUT);
   pinMode(STEPPER_IN2, OUTPUT);
   pinMode(STEPPER_IN3, OUTPUT);
@@ -134,7 +139,7 @@ void StepperMotorPractice(void *stepperParams) {
     state++;
     Serial.println(state);
     delayMicroseconds(10);
-  }
+  }*/
 
 
 
