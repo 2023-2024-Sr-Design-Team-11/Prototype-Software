@@ -2,10 +2,11 @@
 #include <Arduino_FreeRTOS.h>
 #include <StepperDriver.h>
 #define ACTIVITY_LED 13
-#define STEPPER_IN1 11
-#define STEPPER_IN2 10
-#define STEPPER_IN3 9
-#define STEPPER_IN4 8
+#define STEPPER_IN1 2
+#define STEPPER_IN2 3
+#define STEPPER_IN3 4
+#define STEPPER_IN4 5
+#define STEP_EN 6
 
 // put function declarations (prototypes) here:
 
@@ -22,6 +23,7 @@ void setup() {
   Serial.begin(9600);
   // put your setup code here, to run once:
   
+  pinMode(STEP_EN, INPUT);
   StepperMotor motor1(STEPPER_IN1,STEPPER_IN2,STEPPER_IN3,STEPPER_IN4,10,CLOCKWISE);
   motor1.StartStepper();
   Serial.println(motor1.playornot);
@@ -55,7 +57,6 @@ void BlinkTaskPractice(void *blinkParameters) {
 
   //infinite loop
   for(;;) {
-    Serial.println("Running Blink Task");
     digitalWrite(ACTIVITY_LED, state);
 
     state = state == 1 ? 0 : 1;
@@ -71,7 +72,12 @@ void BlinkTaskPractice(void *blinkParameters) {
 
 void StepperMotorPractice(void * motor) {
   StepperMotor motor1 = *(StepperMotor *) motor;
-  StartMotor(motor1);
+  
+  Serial.println(motor1.playornot);
+  
+  motor1.playornot = digitalRead(STEP_EN) ? true : false;
+  RunMotor(motor1);
+  
   //Setup
   /*BaseType_t state = 0;
   pinMode(STEPPER_IN1, OUTPUT);
@@ -143,10 +149,4 @@ void StepperMotorPractice(void * motor) {
 
 
 
-}
-
-void SerialPrintTaskPractice(void *printParams) {
-  for(;;) {
-    
-  }
 }
